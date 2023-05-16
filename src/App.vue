@@ -7,14 +7,14 @@
 
   const WIDTH = window.innerWidth
   const HEIGHT = window.innerHeight
-  const MAX_DROPS = 500
+  const MAX_DROPS = 1000
 
   const canvas = ref<HTMLCanvasElement>()
   const ctx = ref<CanvasRenderingContext2D>()
 
   const debug = useDebug()
   const isRunning = ref(true)
-  const slowmotionMultiplier = ref(1)
+  const slowmotionMultiplier = ref(0.5)
   const mousePos = reactive({
     x: 0,
     y: 0,
@@ -81,7 +81,7 @@
   }
   const slowmotionEvent = (e: KeyboardEvent) => {
     if (e.code != 'Space') return
-    slowmotionMultiplier.value = slowmotionMultiplier.value === 1 ? 0.1 : 1
+    slowmotionMultiplier.value = slowmotionMultiplier.value === 0.5 ? 0.1 : 0.5
   }
 
   onMounted(() => {
