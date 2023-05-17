@@ -5,7 +5,7 @@ export class Drop {
   y: number
   size: number
   thickness: number
-  stroke: number
+  brightness: number
   mass: number
   velocity: number
 
@@ -14,7 +14,7 @@ export class Drop {
     this.y = 0
     this.size = 0
     this.thickness = 0
-    this.stroke = 0
+    this.brightness = 0
     this.mass = 0
     this.velocity = 0
 
@@ -22,36 +22,29 @@ export class Drop {
   }
 
   minimumSize() {
-    return 1
+    return 3
   }
   maximumSize() {
-    return 6
+    return 15
   }
   calcMass() {
     this.mass = this.size * this.thickness
   }
   calcVelocity() {
-    this.velocity = map(
-      this.mass,
-      this.minimumSize(),
-      this.maximumSize() * 2,
-      7,
-      19,
-      true
-    )
+    this.velocity = this.mass
   }
 
   regen() {
-    this.size = random(this.minimumSize(), this.maximumSize() * 3)
-    this.stroke = +map(
+    this.size = random(this.minimumSize(), this.maximumSize())
+    this.brightness = +map(
       this.size,
       this.minimumSize(),
-      this.maximumSize() * 3,
+      this.maximumSize(),
       0.15,
       0.9,
       true
     )
-    this.thickness = this.stroke > 0.85 ? 2 : 1
+    this.thickness = this.brightness > 0.85 ? 2 : 1
 
     this.calcMass()
     this.calcVelocity()
@@ -61,7 +54,7 @@ export class Drop {
     ctx.beginPath()
     ctx.moveTo(this.x, this.y)
     ctx.lineTo(this.x + (opt.wind / 4) * (this.size / 4), this.y + this.size)
-    ctx.strokeStyle = `rgba(255, 255, 255, ${this.stroke})`
+    ctx.strokeStyle = `rgba(255, 255, 255, ${this.brightness})`
     ctx.lineWidth = this.thickness
     ctx.stroke()
     ctx.closePath()
